@@ -77,7 +77,7 @@
         
             {% if user.is_authenticated %}
                 <!-- A choice submission form example -->
-                <form id="questionform" action="point to a submit view" method="post">
+                <form id="questionform" action="submit/" method="post">
                     <!-- ... for each lesson in the course ... -->
                     {% for lesson in course.lesson_set.all %}
                         <!-- ... for each question in the lesson ... -->
@@ -92,7 +92,7 @@
                                     <label class="form-check-label">
                                         <input type="checkbox" name="choice_{{choice.id}}"
                                         class="form-check-input" id="{{choice.id}}"
-                                        value="{{choice.id}}">{{ choice.text }}
+                                        value="{{choice}}">{{ choice.text }}
                                     </label>
                                 </div>
                                 {% endfor %}

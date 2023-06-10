@@ -134,6 +134,7 @@ def submit(request, course_id):
 # <HINT> A example method to collect the selected choices from the exam form from the request object
 def extract_answers(request):
    submitted_anwsers = []
+   print('')
    for key in request.POST:
        if key.startswith('choice'):
            value = request.POST[key]
@@ -141,7 +142,7 @@ def extract_answers(request):
            choice_id = int(key[-1])
         #    print('choice_id', choice_id)
            choice = get_object_or_404(Choice, pk=choice_id)
-        #    print('choice.text', choice.text)
+           print('choice', choice.text)
            submitted_anwsers.append(choice)
    return submitted_anwsers
 
@@ -155,14 +156,17 @@ def show_exam_result(request, course_id, submission_id):
     submission = get_object_or_404(Submission, pk=submission_id)
     # Get the selected choice ids from the submission record
     choices = submission.choices.all()
+    selected_answers = []
     print('choices', choices)
     # For each selected choice, check if it is a correct answer or not
     points = 0
     max_points = 0
     questions = set()
+    print('number of choices', len(choices))
     for choice in choices:
         question = choice.question_id
         grade = question.grade
+        selected_answers.append(choice.text)
         if(question.id not in questions):
             questions.add(question.id)
             max_points += grade
@@ -172,6 +176,7 @@ def show_exam_result(request, course_id, submission_id):
     context['max_points'] = int(max_points)
     context['score'] = int(points/max_points * 100)
     context['course'] = course
+    context['selected_answers'] = selected_answers
 
     print('context', context)
 

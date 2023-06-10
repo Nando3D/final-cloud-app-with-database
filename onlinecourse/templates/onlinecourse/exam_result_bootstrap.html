@@ -53,16 +53,19 @@
                 <div class="card mt-1">
                     <div class="card-header"><h5>{{ question.text}}</h5></div>
                     {% csrf_token %}
-                    <div>
+                    <div class="form-group">
                         {% for choice in question.choice_set.all %}
-                        <div>
+                        <div class="form-check">
                             {% if choice.is_correct %}
-                                <span style="color: green">Correct answer: {{ choice.text }}</span>
-                                {% if not choice.text %}
-                                    <span style="color: yellow">Not Selected: {{ choice.text }}</span>
+                                {% if choice.text not in selected_answers %}
+                                    <span class="text-warning">Not Selected: {{ choice.text }}</span>
+                                {% else %}
+                                    <span class="text-success">Correct answer: {{ choice.text }}</span>
                                 {% endif %}
+                            {% elif not choice.is_correct and choice.text in selected_answers %}
+                                <span class="text-danger">{{ choice.text }}</span>
                             {% else %}
-                                <span >{{ choice.text }}</span>
+                                <span>{{ choice.text }}</span>
                             {% endif %}
                         </div>
                         {% endfor %}

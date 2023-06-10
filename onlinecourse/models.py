@@ -105,7 +105,7 @@ class Question(models.Model):
     # Foreign key to lesson
     lesson_id = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     # question text
-    question_text = models.CharField(max_length=1000, null=False)
+    text = models.CharField(max_length=1000, null=False)
     # question grade/mark
     grade = models.FloatField()
     # A sample model method to calculate if learner get the score of the question
@@ -120,7 +120,7 @@ class Question(models.Model):
 # Used to persist choice content for a question
 class Choice(models.Model):
     # Choice content
-    choice_text = models.CharField(max_length=500,null=True)
+    text = models.CharField(max_length=500,null=True)
     # Indicate if this choice of the question is a correct one or not
     is_correct = models.BooleanField(default=False)
     # One-To-Many (or Many-To-Many if you want to reuse choices) relationship with Question
